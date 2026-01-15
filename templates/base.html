@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mass Salary Prediction</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-5.0.0-beta1.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/animate.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/glightbox.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/lindy-uikit.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/LineIcons.2.0.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/tiny-slider.css') }}">
+</head>
+<body>
+
+<!--  Navbar -->
+<nav class="navbar navbar-expand-lg bg-white shadow-sm rounded-pill mt-4 mx-4 px-4 py-2">
+  <div class="container-fluid">
+
+    <!-- Title -->
+    <a class="navbar-brand fw-bold fs-4" href="/">
+      Mass Salary Prediction
+    </a>
+
+    <!-- Toggler for mobile -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!--Links -->
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav gap-2">
+        <li class="nav-item">
+          <a class="nav-link btn btn-outline-primary rounded-pill px-3 page-scroll" href="/home">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link btn btn-outline-primary rounded-pill px-3 page-scroll" href="/predict">Predict</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link btn btn-outline-primary rounded-pill px-3 page-scroll" href="/history">History</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  <!-- Page Content -->
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- JS -->
+  <script src="{{ url_for('static', filename='js/bootstrap-5.0.0-beta1.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/wow.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/glightbox.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/tiny-slider.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
