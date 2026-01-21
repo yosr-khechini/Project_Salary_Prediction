@@ -1,10 +1,10 @@
 #Imports
 from flask import Flask, render_template, request
 import requests
-from flask_bootstrap import Bootstrap4
+from flask_bootstrap import Bootstrap
 app = Flask(__name__, static_folder='static')
-#bbotstrap initialization
-bootstrap = Bootstrap4(app)
+#bootstrap initialization
+bootstrap = Bootstrap(app)
 #routing
 @app.route("/")
 @app.route("/home", methods=["POST", "GET"])
