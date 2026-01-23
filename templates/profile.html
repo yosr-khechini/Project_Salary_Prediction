@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+  <h2>User Profile</h2>
+
+  <div>
+    <p><strong>Name:</strong> {{ name }}</p>
+    <p><strong>Email:</strong> {{ current_user.email }}</p>
+    <p><strong>Role:</strong> {{ current_user.role }}</p>
+  </div>
+
+  <hr>
+
+  <h3>Actions</h3>
+  <ul>
+    <li><a href="{{ url_for('main.predict') }}">Go to Salary Prediction</a></li>
+    <li><a href="{{ url_for('main.history') }}">View History</a></li>
+    <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+  </ul>
+{% endblock %}

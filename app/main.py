@@ -15,6 +15,14 @@ def history():
 @main.route("/predict", methods=["GET", "POST"], strict_slashes=False)
 @login_required
 def predict():
+    if request.method == "POST":
+        experience = float(request.form["experience"])
+        education = request.form["education"]
+        base_salary = 30000
+        multiplier = {"Bachelor": 1.0, "Master": 1.2, "PhD": 1.5}
+        predicted_salary = base_salary + experience * 2000 * multiplier[education]
+        return render_template("predict.html", user=current_user, salary=predicted_salary)
+
     return render_template("predict.html", user=current_user)
 
 @main.route("/test")
@@ -25,3 +33,6 @@ def test():
 @login_required
 def profile():
     return render_template("profile.html", name=current_user.name)
+@main.app_errorhandler(500)
+def internal_error(error):
+    return "<h1>Something went wrong. Check your terminal for details.</h1>", 500
