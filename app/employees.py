@@ -18,9 +18,8 @@ def _sanitize_input(value: str) -> str:
 @login_required
 def list_employees():
     search = _sanitize_input(request.args.get('search', ''))
-    departement = _sanitize_input(request.args.get('departement', ''))
-    status = _sanitize_input(request.args.get('status', ''))
-
+    departement = _sanitize_input(request.args.get('departement', '')) # TODO: make the departement filter use the database values
+    status = _sanitize_input(request.args.get('status', '')) # 'active', 'terminated'
     query = Employee.query
 
     if search:
@@ -34,9 +33,9 @@ def list_employees():
         query = query.filter(Employee.departement == departement)
 
     if status == 'active':
-        query = query.filter(Employee.date_left.is_(None))
+        query = query.filter(Employee.date_left.is_(None)) # TODO: make status buttons bigger and more visible
     elif status == 'terminated':
-        query = query.filter(Employee.date_left.isnot(None))
+        query = query.filter(Employee.date_left.isnot(None)) # TODO: if employee is terminated and is a user, disable login
 
     all_employees = query.all()
     return render_template("employees.html", employees=all_employees)
@@ -45,7 +44,7 @@ def list_employees():
 @employees.route("/employees/add", methods=["GET", "POST"])
 @login_required
 def add_employee():
-    if request.method == "POST":
+    if request.method == "POST": # TODO: add input for matricule
         try:
             first_name = _sanitize_input(request.form.get("first_name", ""))
             last_name = _sanitize_input(request.form.get("last_name", ""))
@@ -57,6 +56,11 @@ def add_employee():
             age = int(age_raw) if age_raw else None
             if age and (age < 18 or age > 100):
                 raise ValueError("Age must be between 18 and 100")
+
+            matricule_raw = _sanitize_input(request.form.get("matricule", ""))
+            matricule = float(matricule_raw) if matricule_raw else None
+            if matricule and matricule < 0:
+                raise ValueError("matricule cannot be negative")
 
             salary_raw = _sanitize_input(request.form.get("salary", ""))
             salary = float(salary_raw) if salary_raw else None
@@ -86,12 +90,13 @@ def add_employee():
                 salary=salary,
                 indemnite1=indemnite1,
                 indemnite2=indemnite2,
-                date_joined=date_joined
+                date_joined=date_joined,
+                matricule = matricule
             )
 
             db.session.add(emp)
             db.session.commit()
-            flash("Employee added successfully", "success")
+            flash("Employee added successfully", "success") # TODO: make it add employee to table and redirect to list: done
             return redirect(url_for("employees.list_employees"))
 
         except ValueError as e:
