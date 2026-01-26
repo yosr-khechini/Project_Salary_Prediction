@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <h3 class="mb-0"><i class="lni lni-pencil"></i> Edit Employee</h3>
+        </div>
+        <div class="card-body">
+          <form method="POST">
+            <div class="row g-3">
+              <!-- Personal Information -->
+              <div class="col-12">
+                <h5 class="border-bottom pb-2">Personal Information</h5>
+              </div>
+
+              <div class="col-md-6">
+                <label for="firstName" class="form-label">First Name *</label>
+                <input type="text" class="form-control" id="firstName" name="first_name" value="{{ employee.first_name }}" required>
+              </div>
+
+              <div class="col-md-6">
+                <label for="lastName" class="form-label">Last Name *</label>
+                <input type="text" class="form-control" id="lastName" name="last_name" value="{{ employee.last_name }}" required>
+              </div>
+
+              <div class="col-md-6">
+                <label for="age" class="form-label">Age</label>
+                <input type="number" class="form-control" id="age" name="age" value="{{ employee.age or '' }}" min="18" max="100">
+              </div>
+
+              <!-- Job Information -->
+              <div class="col-12 mt-4">
+                <h5 class="border-bottom pb-2">Job Information</h5>
+              </div>
+
+              <div class="col-md-6">
+                <label for="position" class="form-label">Position</label>
+                <input type="text" class="form-control" id="position" name="position" value="{{ employee.position or '' }}">
+              </div>
+
+              <div class="col-md-6">
+                <label for="departement" class="form-label">Department</label>
+                <input type="text" class="form-control" id="departement" name="departement" value="{{ employee.departement or '' }}">
+              </div>
+
+              <div class="col-md-6">
+                <label for="salary" class="form-label">Salary (€)</label>
+                <input type="number" class="form-control" id="salary" name="salary" value="{{ employee.salary or '' }}" step="0.01">
+              </div>
+
+              <div class="col-md-6">
+                <label for="dateJoined" class="form-label">Date Joined</label>
+                <input type="date" class="form-control" id="dateJoined" name="date_joined" value="{{ employee.date_joined or '' }}">
+              </div>
+
+              <div class="col-md-6">
+                <label for="dateLeft" class="form-label">Date Left</label>
+                <input type="date" class="form-control" id="dateLeft" name="date_left" value="{{ employee.date_left or '' }}">
+              </div>
+
+              <!-- Buttons -->
+              <div class="col-12 mt-4">
+                <div class="d-flex gap-2 justify-content-end">
+                  <a href="{{ url_for('employees.list_employees') }}" class="btn btn-secondary rounded-pill px-4">
+                    <i class="lni lni-arrow-left"></i> Cancel
+                  </a>
+                  <button type="submit" class="btn btn-primary rounded-pill px-4">
+                    <i class="lni lni-checkmark"></i> Save Changes
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

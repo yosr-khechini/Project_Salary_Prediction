@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card shadow-sm">
+        <div class="card-header bg-success text-white">
+          <h3 class="mb-0"><i class="lni lni-plus"></i> Add New Employee</h3>
+        </div>
+        <div class="card-body">
+          <form method="POST" action="{{ url_for('employees.add_employee') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <div class="row g-3">
+              <!-- Personal Information -->
+              <div class="col-12">
+                <h5 class="border-bottom pb-2">Personal Information</h5>
+              </div>
+
+              <div class="col-md-6">
+                <label for="firstName" class="form-label">First Name *</label>
+                <input type="text" class="form-control" id="firstName" name="first_name" required>
+              </div>
+
+              <div class="col-md-6">
+                <label for="lastName" class="form-label">Last Name *</label>
+                <input type="text" class="form-control" id="lastName" name="last_name" required>
+              </div>
+
+              <div class="col-md-6">
+                <label for="age" class="form-label">Age</label>
+                <input type="number" class="form-control" id="age" name="age" min="18" max="100">
+              </div>
+
+              <!-- Job Information -->
+              <div class="col-12 mt-4">
+                <h5 class="border-bottom pb-2">Job Information</h5>
+              </div>
+
+              <div class="col-md-6">
+                <label for="position" class="form-label">Position</label>
+                <input type="text" class="form-control" id="position" name="position">
+              </div>
+
+              <div class="col-md-6">
+                <label for="departement" class="form-label">Department</label>
+                <input type="text" class="form-control" id="departement" name="departement">
+              </div>
+
+              <div class="col-md-6">
+                <label for="salary" class="form-label">Salary </label>
+                <input type="number" class="form-control" id="salary" name="salary" step="0.01">
+              </div>
+
+              <div class="col-md-6">
+                <label for="indemnite1" class="form-label">Indemnite 1 </label>
+                <input type="number" class="form-control" id="indemnite1" name="salary" step="0.01">
+              </div>
+
+              <div class="col-md-6">
+                <label for="indemnite2" class="form-label">Indemnite 2</label>
+                <input type="number" class="form-control" id="indemnite2" name="salary" step="0.01">
+              </div>
+
+              <div class="col-md-6">
+                <label for="dateJoined" class="form-label">Date Joined</label>
+                <input type="date" class="form-control" id="dateJoined" name="date_joined">
+              </div>
+
+              <!-- Buttons -->
+              <div class="col-12 mt-4">
+                <div class="d-flex gap-2 justify-content-end">
+                  <a href="{{ url_for('employees.list_employees') }}" class="btn btn-secondary rounded-pill px-4">
+                    <i class="lni lni-arrow-left"></i> Cancel
+                  </a>
+                  <button type="submit" class="btn btn-success rounded-pill px-4">
+                    <i class="lni lni-checkmark"></i> Add Employee
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
