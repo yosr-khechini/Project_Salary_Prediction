@@ -70,3 +70,34 @@ class User(UserMixin, db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+class Recruitment(db.Model):
+    __tablename__ = 'recruitment'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    matricule = db.Column(db.Integer, db.ForeignKey('employees.matricule'), nullable=False)
+    recruitment_date = db.Column(db.Date, nullable=False)
+    departement = db.Column(db.String(100))
+    position = db.Column(db.String(100))
+    first_name = db.Column(db.String(100))
+    last_name = db.Column(db.String(100))
+    notes = db.Column(db.Text)
+    created_at = db.Column(db.DateTime, default=db.func.now())
+
+    employee = db.relationship('Employee', backref='recruitment_history')
+
+
+class Termination(db.Model):
+    __tablename__ = 'termination'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    matricule = db.Column(db.Integer, db.ForeignKey('employees.matricule'), nullable=False)
+    termination_date = db.Column(db.Date, nullable=False)
+    departement = db.Column(db.String(100))
+    position = db.Column(db.String(100))
+    first_name = db.Column(db.String(100))
+    last_name = db.Column(db.String(100))
+    reason = db.Column(db.String(200))
+    created_at = db.Column(db.DateTime, default=db.func.now())
+
+    employee = db.relationship('Employee', backref='termination_history')

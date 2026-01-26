@@ -5,7 +5,7 @@ import html
 from app import db
 from app.models import Employee
 
-employees = Blueprint('employees', __name__)
+employees = Blueprint('employees', __name__, url_prefix='/employees')
 
 def _sanitize_input(value: str) -> str:
     """Sanitize user input to prevent XSS attacks"""
@@ -14,12 +14,14 @@ def _sanitize_input(value: str) -> str:
     return html.escape(value.strip())
 
 # --- List Employees ---
-@employees.route("/employees")
+@employees.route("/")
 @login_required
 def list_employees():
     search = _sanitize_input(request.args.get('search', ''))
-    departement = _sanitize_input(request.args.get('departement', '')) # TODO: make the departement filter use the database values
-    status = _sanitize_input(request.args.get('status', '')) # 'active', 'terminated'
+    departement = _sanitize_input(request.args.get('departement', ''))
+    status = _sanitize_input(request.args.get('status', ''))
+    year = request.args.get('year', type=int)
+
     query = Employee.query
 
     if search:
@@ -30,21 +32,44 @@ def list_employees():
         )
 
     if departement:
-        query = query.filter(Employee.departement == departement)
+        query = query.filter(db.func.upper(Employee.departement) == departement.upper())
 
     if status == 'active':
-        query = query.filter(Employee.date_left.is_(None)) # TODO: make status buttons bigger and more visible
+        query = query.filter(Employee.date_left.is_(None))
     elif status == 'terminated':
-        query = query.filter(Employee.date_left.isnot(None)) # TODO: if employee is terminated and is a user, disable login
+        query = query.filter(Employee.date_left.isnot(None))
+
+    if year:
+        query = query.filter(db.extract('year', Employee.date_joined) == year)
 
     all_employees = query.all()
-    return render_template("employees.html", employees=all_employees)
+
+    # Get distinct departments (uppercase)
+    departments = db.session.query(
+        db.func.upper(Employee.departement)
+    ).distinct().filter(
+        Employee.departement.isnot(None)
+    ).order_by(db.func.upper(Employee.departement)).all()
+    departments = [dept[0] for dept in departments if dept[0]]
+
+    # Get distinct years from date_joined
+    years = db.session.query(
+        db.extract('year', Employee.date_joined).label('year')
+    ).distinct().filter(
+        Employee.date_joined.isnot(None)
+    ).order_by(db.text('year DESC')).all()
+    years = [int(year[0]) for year in years]
+
+    return render_template("employees.html",
+                         employees=all_employees,
+                         departments=departments,
+                         years=years)
 
 # --- Add Employee ---
-@employees.route("/employees/add", methods=["GET", "POST"])
+@employees.route("/add", methods=["GET", "POST"])
 @login_required
 def add_employee():
-    if request.method == "POST": # TODO: add input for matricule
+    if request.method == "POST":
         try:
             first_name = _sanitize_input(request.form.get("first_name", ""))
             last_name = _sanitize_input(request.form.get("last_name", ""))
@@ -77,26 +102,28 @@ def add_employee():
             if indemnite2 and indemnite2 < 0:
                 raise ValueError("Indemnite cannot be negative")
 
-
             date_joined_raw = _sanitize_input(request.form.get("date_joined", ""))
             date_joined = datetime.strptime(date_joined_raw, "%Y-%m-%d").date() if date_joined_raw else None
+
+            departement_input = _sanitize_input(request.form.get("departement", ""))
+            departement = departement_input.upper() if departement_input else None
 
             emp = Employee(
                 first_name=first_name,
                 last_name=last_name,
                 age=age,
                 position=_sanitize_input(request.form.get("position", "")) or None,
-                departement=_sanitize_input(request.form.get("departement", "")) or None,
+                departement=departement,
                 salary=salary,
                 indemnite1=indemnite1,
                 indemnite2=indemnite2,
                 date_joined=date_joined,
-                matricule = matricule
+                matricule=matricule
             )
 
             db.session.add(emp)
             db.session.commit()
-            flash("Employee added successfully", "success") # TODO: make it add employee to table and redirect to list: done
+            flash("Employee added successfully", "success")
             return redirect(url_for("employees.list_employees"))
 
         except ValueError as e:
@@ -109,7 +136,7 @@ def add_employee():
     return render_template("add_employee.html")
 
 # --- Edit Employee ---
-@employees.route("/employees/edit/<int:matricule>", methods=["GET", "POST"])
+@employees.route("/edit/<int:matricule>", methods=["GET", "POST"])
 @login_required
 def edit_employee(matricule):
     employee = Employee.query.get_or_404(matricule)
@@ -136,7 +163,9 @@ def edit_employee(matricule):
             employee.age = age
 
             employee.position = _sanitize_input(request.form.get("position", "")) or None
-            employee.departement = _sanitize_input(request.form.get("departement", "")) or None
+
+            departement_input = _sanitize_input(request.form.get("departement", ""))
+            employee.departement = departement_input.upper() if departement_input else None
 
             salary_raw = _sanitize_input(request.form.get("salary", ""))
             salary = float(salary_raw) if salary_raw else None
@@ -161,7 +190,7 @@ def edit_employee(matricule):
     return render_template("edit_employee.html", employee=employee)
 
 # --- Terminate Employee ---
-@employees.route("/employees/terminate/<int:matricule>", methods=["GET", "POST"])
+@employees.route("/terminate/<int:matricule>", methods=["GET", "POST"])
 @login_required
 def terminate_employee(matricule):
     employee = Employee.query.get_or_404(matricule)

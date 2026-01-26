@@ -10,13 +10,14 @@ csrf = CSRFProtect()
 
 def create_app():
     template_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'templates'))
+    static_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'static'))
 
-    app = Flask(__name__, template_folder=template_dir)
+    app = Flask(__name__, template_folder=template_dir, static_folder=static_dir)
     app.config.from_object('config.Config')
 
     db.init_app(app)
     login_manager.init_app(app)
-    csrf.init_app(app)  # ← Cette ligne est cruciale
+    csrf.init_app(app)
 
     login_manager.login_view = 'auth.login'
 
@@ -30,9 +31,13 @@ def create_app():
     from app.auth import auth
     from app.main import main
     from app.employees import employees
+    from app.recruitment import recruitment_bp
+    from app.termination import termination_bp
 
     app.register_blueprint(auth)
     app.register_blueprint(main)
     app.register_blueprint(employees)
+    app.register_blueprint(recruitment_bp)
+    app.register_blueprint(termination_bp)
 
     return app

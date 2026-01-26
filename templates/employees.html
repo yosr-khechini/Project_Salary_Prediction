@@ -12,40 +12,46 @@
         </a>
       </div>
 
-      <!-- Search and Filter -->
-      <div class="card shadow-sm mb-4">
-        <div class="card-body">
-          <form method="GET">
-            <div class="row g-3">
-              <div class="col-md-4">
-                <input type="text" name="search" class="form-control" placeholder="Search by name, ID..." value="{{ request.args.get('search', '') }}">
-              </div>
-              <div class="col-md-3">
-                <select name="departement" class="form-select">
-                  <option value="">All departments</option>
-                  <option value="IT" {% if request.args.get('departement') == 'IT' %}selected{% endif %}>IT</option>
-                  <option value="HR" {% if request.args.get('departement') == 'HR' %}selected{% endif %}>HR</option>
-                  <option value="Finance" {% if request.args.get('departement') == 'Finance' %}selected{% endif %}>Finance</option>
-                  <option value="Marketing" {% if request.args.get('departement') == 'Marketing' %}selected{% endif %}>Marketing</option>
-                  <option value="Sales" {% if request.args.get('departement') == 'Sales' %}selected{% endif %}>Sales</option>
-                  <option value="Operations" {% if request.args.get('departement') == 'Operations' %}selected{% endif %}>Operations</option>
-                </select>
-              </div>
-              <div class="col-md-3">
-                <select name="status" class="form-select">
-                  <option value="">All statuses</option>
-                  <option value="active" {% if request.args.get('status') == 'active' %}selected{% endif %}>Active</option>
-                  <option value="terminated" {% if request.args.get('status') == 'terminated' %}selected{% endif %}>Terminated</option>
-                </select>
-              </div>
-              <div class="col-md-2">
-                <button type="submit" class="btn btn-primary w-100">Filter</button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-
+     <!-- Search and Filter -->
+     <div class="card shadow-sm mb-4">
+       <div class="card-body">
+         <form method="GET">
+           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+           <div class="row g-3">
+             <div class="col-md-3">
+               <input type="text" name="search" class="form-control" placeholder="Search by name, ID..." value="{{ request.args.get('search', '') }}">
+             </div>
+             <div class="col-md-2">
+               <select name="departement" class="form-select">
+                 <option value="">All departments</option>
+                 {% for dept in departments %}
+                 <option value="{{ dept }}" {% if request.args.get('departement') == dept %}selected{% endif %}>{{ dept }}</option>
+                 {% endfor %}
+               </select>
+             </div>
+             <div class="col-md-2">
+               <select name="status" class="form-select">
+                 <option value="">All statuses</option>
+                 <option value="active" {% if request.args.get('status') == 'active' %}selected{% endif %}>Active</option>
+                 <option value="terminated" {% if request.args.get('status') == 'terminated' %}selected{% endif %}>Terminated</option>
+               </select>
+             </div>
+             <div class="col-md-2">
+               <select name="year" class="form-select">
+                 <option value="">All years</option>
+                 {% for year in years %}
+                 <option value="{{ year }}" {% if request.args.get('year') == year|string %}selected{% endif %}>{{ year }}</option>
+                 {% endfor %}
+               </select>
+             </div>
+             <div class="col-md-3">
+               <button type="submit" class="btn btn-primary w-100">Filter</button>
+               <a href="{{ url_for('employees.list_employees') }}" class="btn btn-outline-secondary w-100 mt-1">Clear</a>
+             </div>
+           </div>
+         </form>
+       </div>
+     </div>
       <!-- Employees Table -->
       <div class="card shadow-sm">
         <div class="card-body">
