@@ -1,40 +1,38 @@
-import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from flask_wtf.csrf import CSRFProtect
+import os
 
 db = SQLAlchemy()
+login_manager = LoginManager()
+csrf = CSRFProtect()
 
 def create_app():
     template_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'templates'))
-    app = Flask(__name__, template_folder=template_dir)
 
-    app.config['SECRET_KEY'] = 'your-secret-key'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app = Flask(__name__, template_folder=template_dir)
+    app.config.from_object('config.Config')
 
     db.init_app(app)
-
-    login_manager = LoginManager()
-    login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
+    csrf.init_app(app)  # ← Cette ligne est cruciale
 
-    from app.models import User
-    @login_manager.user_loader
-    def load_user(user_id):
-        return User.query.get(int(user_id))
+    login_manager.login_view = 'auth.login'
 
-    from app.auth import auth as auth_blueprint
-    app.register_blueprint(auth_blueprint)
+    with app.app_context():
+        from app.models import User
 
-    from app.main import main as main_blueprint
-    app.register_blueprint(main_blueprint)
+        @login_manager.user_loader
+        def load_user(user_id):
+            return User.query.get(int(user_id))
 
-    @app.cli.command("init-db")
-    def init_db():
-        with app.app_context():
-            db.create_all()
-            print("Database initialized.")
+    from app.auth import auth
+    from app.main import main
+    from app.employees import employees
 
-    print("Template folder:", template_dir)
+    app.register_blueprint(auth)
+    app.register_blueprint(main)
+    app.register_blueprint(employees)
+
     return app
