@@ -173,6 +173,24 @@ def edit_employee(matricule):
                 raise ValueError("Salary cannot be negative")
             employee.salary = salary
 
+            salary_raw = _sanitize_input(request.form.get("salary", ""))
+            salary = float(salary_raw) if salary_raw else None
+            if salary and salary < 0:
+                raise ValueError("Salary cannot be negative")
+            employee.salary = salary
+
+            indemnite1_raw = _sanitize_input(request.form.get("indemnite1", ""))
+            indemnite1 = float(indemnite1_raw) if salary_raw else None
+            if indemnite1 and indemnite1 < 0:
+                raise ValueError("indemnite cannot be negative")
+            employee.indemnite1 = indemnite1
+
+            indemnite2_raw = _sanitize_input(request.form.get("indemnite2", ""))
+            indemnite2= float(indemnite2_raw) if salary_raw else None
+            if indemnite2 and indemnite2 < 0:
+                raise ValueError("indemnite cannot be negative")
+            employee.indemnite2= indemnite2
+
             date_joined_raw = _sanitize_input(request.form.get("date_joined", ""))
             employee.date_joined = datetime.strptime(date_joined_raw, "%Y-%m-%d").date() if date_joined_raw else None
 
