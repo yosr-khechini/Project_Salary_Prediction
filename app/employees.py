@@ -77,10 +77,9 @@ def add_employee():
             if not first_name or not last_name:
                 raise ValueError("First name and last name are required")
 
-            age_raw = _sanitize_input(request.form.get("age", ""))
-            age = int(age_raw) if age_raw else None
-            if age and (age < 18 or age > 100):
-                raise ValueError("Age must be between 18 and 100")
+
+            birth_date_raw = _sanitize_input(request.form.get("birth_date", ""))
+            birth_date = datetime.strptime(birth_date_raw, "%Y-%m-%d").date() if birth_date_raw else None
 
             matricule_raw = _sanitize_input(request.form.get("matricule", ""))
             matricule = float(matricule_raw) if matricule_raw else None
@@ -111,7 +110,7 @@ def add_employee():
             emp = Employee(
                 first_name=first_name,
                 last_name=last_name,
-                age=age,
+                birth_date=birth_date,
                 position=_sanitize_input(request.form.get("position", "")) or None,
                 departement=departement,
                 salary=salary,
@@ -156,11 +155,9 @@ def edit_employee(matricule):
             employee.first_name = first_name
             employee.last_name = last_name
 
-            age_raw = _sanitize_input(request.form.get("age", ""))
-            age = int(age_raw) if age_raw else None
-            if age and (age < 18 or age > 100):
-                raise ValueError("Age must be between 18 and 100")
-            employee.age = age
+
+            birth_date_raw = _sanitize_input(request.form.get("birth_date", ""))
+            employee.birth_date = datetime.strptime(birth_date_raw, "%Y-%m-%d").date() if birth_date_raw else None
 
             employee.position = _sanitize_input(request.form.get("position", "")) or None
 
