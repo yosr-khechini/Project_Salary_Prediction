@@ -61,7 +61,7 @@
                 <tr>
                   <th>Matricule</th>
                   <th>Full Name</th>
-                  <th>Age</th>
+                  <th>Birth Date</th>
                   <th>Position</th>
                   <th>Department</th>
                   <th>Salary</th>
@@ -79,7 +79,7 @@
                   <tr class="{% if employee.date_left %}text-muted{% endif %}" style="{% if employee.date_left %}opacity: 0.6;{% endif %}">
                     <td>{{ employee.matricule }}</td>
                     <td>{{ employee.first_name }} {{ employee.last_name }}</td>
-                    <td>{{ employee.age or '-' }}</td>
+                    <td>{{ employee.birth_date or '-' }}</td>
                     <td>{{ employee.position or '-' }}</td>
                     <td>{{ employee.departement or '-' }}</td>
                     <td>{{ '%.2f'|format(employee.salary) if employee.salary else '-' }} </td>

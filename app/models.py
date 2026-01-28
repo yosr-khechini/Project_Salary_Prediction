@@ -11,7 +11,7 @@ class Employee(db.Model):
     matricule = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(50), nullable=False)
     last_name = db.Column(db.String(50), nullable=False)
-    age = db.Column(db.Integer)
+    birth_date = db.Column(db.Date, nullable=False)
     position = db.Column(db.String(50))
     salary = db.Column(db.Numeric(10, 2))
     departement = db.Column(db.String(50))
@@ -24,7 +24,7 @@ class Employee(db.Model):
             'matricule': self.matricule,
             'first_name': self.first_name,
             'last_name': self.last_name,
-            'age': self.age,
+            'birth_date': self.birth_date,
             'position': self.position,
             'salary': float(self.salary) if self.salary else None,
             'departement': self.departement,
@@ -41,7 +41,6 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(64), unique=True, nullable=False, index=True)
     email_adress = db.Column(db.String(120), unique=True, nullable=False, index=True)
     password_hash = db.Column(db.String(255), nullable=False)
-    #role = db.Column(db.String(20), default='manager')
     matricule = db.Column(db.Integer, db.ForeignKey('employees.matricule'), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
