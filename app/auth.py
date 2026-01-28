@@ -57,10 +57,12 @@ def login():
     return render_template('login.html')
 
 
-@auth.route('/logout')
+@auth.route('/logout', methods=['GET', 'POST'])
 def logout():
     logout_user()
-    return redirect(url_for('auth.login'))
+    #return redirect(url_for('auth.login'))
+    return redirect(url_for('main.index'))
+
 
 
 @auth.route('/signup', methods=['GET', 'POST'])

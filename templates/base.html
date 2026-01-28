@@ -58,6 +58,7 @@
         {% if current_user.is_authenticated %}
           <li class="nav-item">
             <form method="POST" action="{{ url_for('auth.logout') }}" style="display: inline;">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
               <button class="nav-link btn btn-outline-danger rounded-pill px-3 page-scroll" type="submit">Logout</button>
             </form>
           </li>
