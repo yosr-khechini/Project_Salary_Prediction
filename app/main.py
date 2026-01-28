@@ -54,7 +54,7 @@ def predict():
         multiplier = {"Bachelor": 1.0, "Master": 1.2, "PhD": 1.5}
         salary = round(base_salary + experience * 2000.0 * multiplier[education], 2)
 
-    return render_template("predict.html", user=current_user, salary=salary)
+    return render_template("prediction.html", user=current_user, salary=salary)
 
 # --- Profile ---
 @main.route("/profile", methods=["GET"])

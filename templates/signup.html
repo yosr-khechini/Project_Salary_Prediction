@@ -32,7 +32,7 @@
             {% endwith %}
 
             <form method="POST" action="{{ url_for('auth.signup') }}">
-              {{ csrf_token() }}
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
               <div class="mb-3">
                 <label for="matricule" class="form-label">Matricule</label>
                 <input type="number" class="form-control" id="matricule" name="matricule" required>
