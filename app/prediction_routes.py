@@ -1,8 +1,13 @@
 from flask import Blueprint, render_template, request, jsonify, current_app
 from app.prediction import predict_salaries, generate_graph, validate_inputs
 from app.model_loader import get_model, get_scaler, get_model_metrics
-from flask_login import login_required
+from flask_login import login_required, current_user
 import pandas as pd
+from app import db
+from app.models import PredictionHistory
+import json
+
+
 
 # Créer le blueprint
 prediction_bp = Blueprint('prediction', __name__, url_prefix='/prediction')
@@ -91,6 +96,19 @@ def predict():
             'graph': graph_base64,
             'metrics': metrics_data
         }
+
+        if current_user.is_authenticated:
+            history = PredictionHistory(
+                user_id=current_user.id,
+                start_year=start_year,
+                end_year=end_year,
+                recruitments=recruitments,
+                departures=departures,
+                initial_employees=initial_employees,
+                result_json=json.dumps(response)
+            )
+            db.session.add(history)
+            db.session.commit()
 
         return jsonify(response), 200
 
