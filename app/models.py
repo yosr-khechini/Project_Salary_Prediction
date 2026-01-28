@@ -101,3 +101,25 @@ class Termination(db.Model):
     created_at = db.Column(db.DateTime, default=db.func.now())
 
     employee = db.relationship('Employee', backref='termination_history')
+
+
+class PredictionHistory(db.Model):
+    __tablename__ = 'prediction_history'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+
+    # Inputs
+    start_year = db.Column(db.Integer, nullable=False)
+    end_year = db.Column(db.Integer, nullable=False)
+    recruitments = db.Column(db.Integer, nullable=False)
+    departures = db.Column(db.Integer, nullable=False)
+    initial_employees = db.Column(db.Integer, nullable=False)
+
+    # Results (store as JSON string for flexibility)
+    result_json = db.Column(db.Text(length=4294967295), nullable=False)
+
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    # Relationship back to User
+    user = db.relationship('User', backref='prediction_history')

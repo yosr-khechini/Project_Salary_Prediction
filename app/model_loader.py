@@ -54,10 +54,10 @@ def get_model_metrics():
             if os.path.exists(METRICS_PATH):
                 _metrics_cache = joblib.load(METRICS_PATH)
             else:
-                print(f"⚠️ Fichier de métriques non trouvé: {METRICS_PATH}")
+                print(f"Fichier de métriques non trouvé: {METRICS_PATH}")
                 _metrics_cache = {'r2': 0.0, 'mse': 0.0}
         except Exception as e:
-            print(f"❌ Erreur lors du chargement des métriques: {e}")
+            print(f"Erreur lors du chargement des métriques: {e}")
             _metrics_cache = {'r2': 0.0, 'mse': 0.0}
 
     return _metrics_cache

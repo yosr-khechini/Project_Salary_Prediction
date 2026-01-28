@@ -3,8 +3,8 @@
   <component name="de.achimonline.quickjinja.settings.QuickJinjaProjectSettingsState">
     <option name="settings">
       <QuickJinjaProjectSettings>
-        <option name="templateFilePath" value="$PROJECT_DIR$/templates/base.html" />
-        <option name="templateSource" value="CLIPBOARD" />
+        <option name="templateFilePath" value="$PROJECT_DIR$/static/js/prediction.js" />
+        <option name="templateSource" value="TEXT_SELECTION" />
       </QuickJinjaProjectSettings>
     </option>
   </component>

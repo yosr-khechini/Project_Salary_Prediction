@@ -12,7 +12,7 @@
               Review all your past salary predictions and their results.
             </p>
 
-            {% if history and history|length > 0 %}
+            {% if histories and histories|length > 0 %}
               <div class="table-responsive">
                 <table class="table table-striped table-hover align-middle">
                   <thead class="table-primary">
@@ -22,22 +22,24 @@
                       <th scope="col">End Year</th>
                       <th scope="col">Recruitments</th>
                       <th scope="col">Departures</th>
+                      <th scope="col">Initial Employees</th>
                       <th scope="col">Date</th>
                       <th scope="col">Graph</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {% for item in history %}
+                    {% for item in histories %}
                       <tr>
                         <td>{{ loop.index }}</td>
                         <td>{{ item.start_year }}</td>
                         <td>{{ item.end_year }}</td>
                         <td>{{ item.recruitments }}</td>
                         <td>{{ item.departures }}</td>
-                        <td>{{ item.date }}</td>
+                        <td>{{ item.initial_employees }}</td>
+                        <td>{{ item.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
                         <td>
-                          {% if item.graph %}
-                            <img src="{{ item.graph }}" alt="Graph" class="img-thumbnail" style="max-height:80px;">
+                          {% if item.result_data.graph %}
+                            <img src="{{ item.result_data.graph }}" alt="Graph" class="img-thumbnail" style="max-height:80px;">
                           {% else %}
                             <span class="text-muted">No graph</span>
                           {% endif %}

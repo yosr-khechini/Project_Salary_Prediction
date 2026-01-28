@@ -82,10 +82,9 @@
                     <td>{{ employee.age or '-' }}</td>
                     <td>{{ employee.position or '-' }}</td>
                     <td>{{ employee.departement or '-' }}</td>
-                    <td>{{ '%.2f'|format(employee.salary) if employee.salary else '-' }} €</td>
-                    <td>{{ '%.2f'|format(employee.indemnite1) if employee.salary else '-' }} €</td>
-                    <td>{{ '%.2f'|format(employee.indemnite2) if employee.salary else '-' }} €</td>
-                    <td>{{ '%.2f'|format(employee.salary) if employee.salary else '-' }} €</td>
+                    <td>{{ '%.2f'|format(employee.salary) if employee.salary else '-' }} </td>
+                    <td>{{ '%.2f'|format(employee.indemnite1) if employee.salary else '-' }} </td>
+                    <td>{{ '%.2f'|format(employee.indemnite2) if employee.salary else '-' }} </td>
                     <td>{{ employee.date_joined or '-' }}</td>
                     <td>
                       {% if employee.date_left %}

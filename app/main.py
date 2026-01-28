@@ -2,6 +2,9 @@ from flask import Blueprint, render_template, request, flash
 from flask_login import login_required, current_user
 import html
 from .models import Employee
+from flask_login import login_required, current_user
+from app.models import PredictionHistory
+import json
 
 # Blueprint principal
 main = Blueprint('main', __name__)
@@ -14,7 +17,6 @@ def _sanitize_input(value: str) -> str:
 
 # --- Home ---
 @main.route('/')
-@login_required
 def index():
     return render_template('index.html')
 
@@ -24,10 +26,19 @@ def home():
     return render_template("home.html", user=current_user)
 
 # --- History ---
+
 @main.route("/history", methods=["GET"], strict_slashes=False)
 @login_required
 def history():
-    return render_template("history.html", user=current_user)
+    histories = PredictionHistory.query.filter_by(user_id=current_user.id).order_by(PredictionHistory.created_at.desc()).all()
+
+    for h in histories:
+        try:
+            h.result_data = json.loads(h.result_json)
+        except Exception:
+            h.result_data = {}
+
+    return render_template("history.html", user=current_user, histories=histories)
 
 # --- Predict ---
 @main.route("/predict", methods=["GET", "POST"], strict_slashes=False)
