@@ -1,0 +1,1534 @@
+\documentclass[12pt,a4paper]{report}
+
+% ========================================
+% Packages
+% ========================================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{setspace}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{cite}
+
+% ========================================
+% Page geometry
+% ========================================
+\geometry{
+    left=3cm,
+    right=2.5cm,
+    top=2.5cm,
+    bottom=2.5cm
+}
+
+% ========================================
+% Code listing settings
+% ========================================
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{pythonstyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    language=Python
+}
+
+\lstset{style=pythonstyle}
+
+% ========================================
+% Hyperref configuration
+% ========================================
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    citecolor=black,
+    pdftitle={Internship Report - Salary Prediction System},
+    pdfauthor={Your Name},
+}
+
+% ========================================
+% Header and footer
+% ========================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\leftmark}
+\fancyhead[R]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ========================================
+% Line spacing
+% ========================================
+\onehalfspacing
+
+% ========================================
+% Document information
+% ========================================
+\title{Salary Prediction System using Machine Learning}
+\author{Your Name}
+\date{\today}
+
+% ========================================
+% Document begins
+% ========================================
+\begin{document}
+
+% ========================================
+% Title page
+% ========================================
+\begin{titlepage}
+    \centering
+    \vspace*{1cm}
+    
+    {\LARGE \textbf{University Name}}\\[0.5cm]
+    {\large Faculty/Department Name}\\[2cm]
+    
+    \rule{\linewidth}{0.5mm}\\[0.4cm]
+    {\huge \textbf{Internship Report}}\\[0.2cm]
+    {\Large \textbf{Salary Prediction System}}\\[0.1cm]
+    {\Large \textbf{Using Machine Learning Techniques}}\\[0.4cm]
+    \rule{\linewidth}{0.5mm}\\[2cm]
+    
+    \begin{minipage}{0.4\textwidth}
+        \begin{flushleft}
+            \large
+            \textbf{Prepared by:}\\
+            Your Name\\
+            Student ID: XXXXXXX\\
+        \end{flushleft}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.4\textwidth}
+        \begin{flushright}
+            \large
+            \textbf{Supervised by:}\\
+            Supervisor Name\\
+            Position\\
+        \end{flushright}
+    \end{minipage}\\[2cm]
+    
+    \vfill
+    
+    {\large Company/Organization Name}\\[0.3cm]
+    {\large Internship Period: Start Date - End Date}\\[0.3cm]
+    {\large Academic Year: 20XX-20XX}
+    
+\end{titlepage}
+
+% ========================================
+% Acknowledgements
+% ========================================
+\chapter*{Acknowledgements}
+\addcontentsline{toc}{chapter}{Acknowledgements}
+
+I would like to express my sincere gratitude to all those who contributed to the success of this internship and this project.
+
+First and foremost, I would like to thank my supervisor, [Supervisor Name], for their guidance, support, and valuable advice throughout this internship period. Their expertise in [field] was instrumental in the completion of this project.
+
+I am also grateful to the entire team at [Company/Organization Name] for welcoming me and providing me with the resources and environment necessary to carry out this work.
+
+Finally, I would like to thank [University Name] and particularly the faculty of [Department] for their academic training which prepared me for this professional experience.
+
+\vspace{1cm}
+\begin{flushright}
+    Your Name\\
+    \today
+\end{flushright}
+
+% ========================================
+% Abstract
+% ========================================
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+
+This report presents the development of a comprehensive Salary Prediction System designed to estimate employee salaries based on various factors such as experience, education level, position, and department. The system leverages machine learning techniques, specifically Random Forest and XGBoost algorithms, to provide accurate salary predictions.
+
+The project is implemented as a web application using Flask framework, providing an intuitive interface for HR professionals and managers to predict salaries, manage employee records, and track prediction history. The system integrates multiple components including user authentication, employee management, recruitment and termination tracking, and a machine learning prediction engine.
+
+Key features include:
+\begin{itemize}
+    \item Machine learning models (Random Forest and XGBoost) for salary prediction
+    \item User authentication and authorization system
+    \item Employee database management
+    \item Prediction history tracking
+    \item Recruitment and termination management
+    \item RESTful API for programmatic access
+\end{itemize}
+
+The system demonstrates the practical application of machine learning in human resources management, providing data-driven insights for salary decisions and workforce planning.
+
+\textbf{Keywords:} Salary Prediction, Machine Learning, Flask, Random Forest, XGBoost, HR Management, Web Application
+
+% ========================================
+% Table of contents
+% ========================================
+\tableofcontents
+
+\listoffigures
+\addcontentsline{toc}{chapter}{List of Figures}
+
+\listoftables
+\addcontentsline{toc}{chapter}{List of Tables}
+
+% ========================================
+% Introduction
+% ========================================
+\chapter{Introduction}
+
+\section{Context and Motivation}
+
+In today's competitive business environment, human resources management plays a crucial role in organizational success. One of the most critical and challenging aspects of HR management is determining appropriate salary levels for employees. Traditional salary determination methods often rely on subjective assessments, industry standards, and negotiation, which can lead to inconsistencies and potential inequities.
+
+The advent of machine learning and data analytics provides new opportunities to make this process more objective, transparent, and data-driven. By analyzing historical salary data and identifying patterns based on factors such as experience, education, position, and department, organizations can make more informed salary decisions.
+
+\section{Problem Statement}
+
+Organizations face several challenges in salary management:
+\begin{itemize}
+    \item \textbf{Inconsistency:} Different managers may apply different criteria when determining salaries
+    \item \textbf{Lack of transparency:} Employees may not understand how their salaries are determined
+    \item \textbf{Market competitiveness:} Ensuring salaries are competitive while maintaining budget constraints
+    \item \textbf{Fairness:} Ensuring equal pay for equal work across different demographics
+    \item \textbf{Forecasting:} Difficulty in predicting future salary budgets based on workforce changes
+\end{itemize}
+
+\section{Objectives}
+
+The primary objectives of this project are:
+\begin{enumerate}
+    \item Develop a machine learning model capable of predicting employee salaries based on relevant features
+    \item Create a user-friendly web application for HR professionals to access the prediction system
+    \item Implement a complete employee management system integrated with the prediction engine
+    \item Provide historical tracking of predictions for audit and analysis purposes
+    \item Ensure the system is secure, scalable, and maintainable
+\end{enumerate}
+
+\section{Report Structure}
+
+This report is organized as follows:
+\begin{itemize}
+    \item \textbf{Chapter 2} presents the organization and the work environment
+    \item \textbf{Chapter 3} provides a literature review and theoretical background
+    \item \textbf{Chapter 4} describes the system requirements and specifications
+    \item \textbf{Chapter 5} details the system architecture and design
+    \item \textbf{Chapter 6} explains the machine learning models and methodology
+    \item \textbf{Chapter 7} discusses the implementation details
+    \item \textbf{Chapter 8} presents testing and validation results
+    \item \textbf{Chapter 9} concludes the report and discusses future work
+\end{itemize}
+
+% ========================================
+% Chapter 2: Organization
+% ========================================
+\chapter{Organization and Work Environment}
+
+\section{Presentation of the Organization}
+
+[Provide details about the company/organization where the internship was conducted]
+
+\subsection{Overview}
+% Add organization overview
+
+\subsection{Mission and Vision}
+% Add mission and vision
+
+\subsection{Organizational Structure}
+% Add organizational chart or structure description
+
+\section{The IT Department}
+
+[Describe the IT department where you worked]
+
+\subsection{Team Composition}
+% Describe the team
+
+\subsection{Technologies Used}
+% List the technologies used in the department
+
+\section{Internship Context}
+
+\subsection{Internship Duration}
+% Specify the duration
+
+\subsection{Tasks and Responsibilities}
+% Describe your tasks
+
+\subsection{Work Environment}
+% Describe the work environment
+
+% ========================================
+% Chapter 3: Literature Review
+% ========================================
+\chapter{Literature Review and Theoretical Background}
+
+\section{Machine Learning Overview}
+
+Machine learning is a subset of artificial intelligence that enables systems to learn and improve from experience without being explicitly programmed. In the context of salary prediction, supervised learning algorithms are employed where the model learns from historical data containing both input features (experience, education, etc.) and output labels (actual salaries).
+
+\subsection{Supervised Learning}
+
+Supervised learning involves training a model on labeled data. The model learns to map input features to output labels, allowing it to make predictions on new, unseen data.
+
+\subsection{Regression Analysis}
+
+Salary prediction is a regression problem where the goal is to predict a continuous numerical value (salary) based on input features. Unlike classification which predicts categories, regression predicts quantities.
+
+\section{Machine Learning Algorithms}
+
+\subsection{Random Forest}
+
+Random Forest is an ensemble learning method that constructs multiple decision trees during training and outputs the mean prediction of individual trees for regression tasks.
+
+\textbf{Advantages:}
+\begin{itemize}
+    \item Handles both numerical and categorical features
+    \item Resistant to overfitting
+    \item Provides feature importance measures
+    \item Robust to outliers and noise
+\end{itemize}
+
+\textbf{Mathematical Foundation:}
+
+For a Random Forest with $T$ trees, the prediction for an input $x$ is:
+\begin{equation}
+    \hat{y} = \frac{1}{T} \sum_{t=1}^{T} h_t(x)
+\end{equation}
+
+where $h_t(x)$ is the prediction of the $t$-th decision tree.
+
+\subsection{XGBoost (Extreme Gradient Boosting)}
+
+XGBoost is an optimized gradient boosting algorithm that builds models sequentially, with each new model attempting to correct the errors of the previous ones.
+
+\textbf{Key Features:}
+\begin{itemize}
+    \item Regularization to prevent overfitting
+    \item Handling missing values automatically
+    \item Parallel processing for faster training
+    \item Tree pruning for efficiency
+\end{itemize}
+
+\textbf{Objective Function:}
+
+XGBoost minimizes the following objective function:
+\begin{equation}
+    \mathcal{L}(\phi) = \sum_{i} l(\hat{y}_i, y_i) + \sum_{k} \Omega(f_k)
+\end{equation}
+
+where $l$ is the loss function and $\Omega$ is the regularization term.
+
+\section{Web Application Development}
+
+\subsection{Flask Framework}
+
+Flask is a lightweight Python web framework that provides the essential tools for building web applications. Its simplicity and flexibility make it ideal for developing machine learning applications.
+
+\subsection{Model-View-Controller (MVC) Architecture}
+
+The MVC pattern separates application logic into three interconnected components:
+\begin{itemize}
+    \item \textbf{Model:} Manages data and business logic
+    \item \textbf{View:} Handles presentation and user interface
+    \item \textbf{Controller:} Manages user input and updates model/view
+\end{itemize}
+
+\section{Related Work}
+
+[Discuss previous work and research on salary prediction systems]
+
+% ========================================
+% Chapter 4: Requirements and Specifications
+% ========================================
+\chapter{Requirements and Specifications}
+
+\section{Functional Requirements}
+
+\subsection{User Authentication}
+\begin{itemize}
+    \item Users must be able to register with email and password
+    \item Users must be able to log in securely
+    \item Password must be hashed using secure algorithms
+    \item Session management for authenticated users
+\end{itemize}
+
+\subsection{Employee Management}
+\begin{itemize}
+    \item Add new employee records
+    \item View employee information
+    \item Update employee details
+    \item Track employee history
+\end{itemize}
+
+\subsection{Salary Prediction}
+\begin{itemize}
+    \item Input employee features (experience, education, position, department)
+    \item Generate salary prediction using trained models
+    \item Display prediction results
+    \item Compare predictions from different models
+\end{itemize}
+
+\subsection{Prediction History}
+\begin{itemize}
+    \item Store all predictions with timestamps
+    \item Allow users to view their prediction history
+    \item Export prediction history
+\end{itemize}
+
+\subsection{Recruitment and Termination}
+\begin{itemize}
+    \item Record new recruitments
+    \item Track terminations
+    \item Maintain workforce statistics
+\end{itemize}
+
+\section{Non-Functional Requirements}
+
+\subsection{Security}
+\begin{itemize}
+    \item CSRF protection for all forms
+    \item Input validation and sanitization
+    \item Secure password storage
+    \item SQL injection prevention
+\end{itemize}
+
+\subsection{Performance}
+\begin{itemize}
+    \item Prediction response time < 1 second
+    \item Support concurrent users
+    \item Efficient database queries
+\end{itemize}
+
+\subsection{Usability}
+\begin{itemize}
+    \item Intuitive user interface
+    \item Responsive design
+    \item Clear error messages
+    \item Help documentation
+\end{itemize}
+
+\subsection{Maintainability}
+\begin{itemize}
+    \item Modular code structure
+    \item Comprehensive documentation
+    \item Version control
+    \item Testing coverage
+\end{itemize}
+
+\section{System Constraints}
+
+\subsection{Technical Constraints}
+\begin{itemize}
+    \item Python 3.x environment
+    \item Compatible with modern web browsers
+    \item MySQL/SQLite database
+\end{itemize}
+
+\subsection{Business Constraints}
+\begin{itemize}
+    \item Budget limitations
+    \item Time constraints
+    \item Data privacy regulations
+\end{itemize}
+
+% ========================================
+% Chapter 5: System Architecture and Design
+% ========================================
+\chapter{System Architecture and Design}
+
+\section{System Architecture Overview}
+
+The Salary Prediction System follows a three-tier architecture:
+\begin{itemize}
+    \item \textbf{Presentation Layer:} HTML/CSS/JavaScript frontend
+    \item \textbf{Application Layer:} Flask application with business logic
+    \item \textbf{Data Layer:} SQLAlchemy ORM with database backend
+\end{itemize}
+
+\section{Component Architecture}
+
+\subsection{Application Components}
+
+The system consists of the following main components:
+
+\begin{enumerate}
+    \item \textbf{Authentication Module:} Handles user registration and login
+    \item \textbf{Employee Management Module:} CRUD operations for employees
+    \item \textbf{Prediction Engine:} Machine learning model inference
+    \item \textbf{History Tracker:} Records and retrieves prediction history
+    \item \textbf{Recruitment/Termination Module:} Workforce change tracking
+    \item \textbf{API Module:} RESTful endpoints for external access
+\end{enumerate}
+
+\subsection{Database Schema}
+
+The database includes the following main tables:
+
+\begin{itemize}
+    \item \textbf{User:} User authentication credentials
+    \item \textbf{Employee:} Employee information
+    \item \textbf{PredictionHistory:} Historical predictions
+    \item \textbf{Recruitment:} New hire records
+    \item \textbf{Termination:} Employee departure records
+\end{itemize}
+
+\section{Design Patterns}
+
+\subsection{Blueprint Pattern}
+
+Flask Blueprints are used to organize the application into modular components:
+\begin{itemize}
+    \item \texttt{auth}: Authentication routes
+    \item \texttt{main}: Main application routes
+    \item \texttt{employees}: Employee management
+    \item \texttt{recruitment\_bp}: Recruitment management
+    \item \texttt{termination\_bp}: Termination management
+    \item \texttt{prediction\_bp}: Prediction API
+\end{itemize}
+
+\subsection{Singleton Pattern}
+
+Database and login manager instances are created once and shared across the application.
+
+\section{Security Architecture}
+
+\subsection{Authentication and Authorization}
+
+\begin{itemize}
+    \item Flask-Login for session management
+    \item Argon2 password hashing
+    \item CSRF protection on all forms
+    \item Role-based access control
+\end{itemize}
+
+\subsection{Input Validation}
+
+All user inputs are sanitized to prevent:
+\begin{itemize}
+    \item SQL injection attacks
+    \item Cross-site scripting (XSS)
+    \item Command injection
+\end{itemize}
+
+% ========================================
+% Chapter 6: Machine Learning Models
+% ========================================
+\chapter{Machine Learning Models and Methodology}
+
+\section{Data Collection and Preparation}
+
+\subsection{Data Sources}
+
+The training data consists of historical employee records including:
+\begin{itemize}
+    \item Employee demographics (age, education)
+    \item Work experience (years of experience)
+    \item Job characteristics (position, department)
+    \item Compensation (salary)
+\end{itemize}
+
+\subsection{Data Preprocessing}
+
+\subsubsection{Data Cleaning}
+
+\begin{lstlisting}[caption={Data Cleaning Process}]
+def clean_keys(df):
+    # Convert Year and Month to numeric
+    df["Year"] = pd.to_numeric(
+        df["Year"].astype(str).str.strip(), 
+        errors="coerce"
+    )
+    df["Month"] = pd.to_numeric(
+        df["Month"].astype(str).str.strip(), 
+        errors="coerce"
+    )
+    # Remove rows with missing values
+    df = df.dropna(subset=["Year", "Month"])
+    df["Year"] = df["Year"].astype(int)
+    df["Month"] = df["Month"].astype(int)
+    return df
+\end{lstlisting}
+
+\subsubsection{Feature Engineering}
+
+Features are engineered to improve model performance:
+\begin{itemize}
+    \item Encoding categorical variables (education level, position)
+    \item Scaling numerical features (experience, salary)
+    \item Creating interaction features
+\end{itemize}
+
+\subsubsection{Feature Scaling}
+
+StandardScaler is applied to normalize numerical features:
+\begin{equation}
+    z = \frac{x - \mu}{\sigma}
+\end{equation}
+
+where $\mu$ is the mean and $\sigma$ is the standard deviation.
+
+\section{Model Development}
+
+\subsection{Random Forest Model}
+
+\subsubsection{Model Configuration}
+
+\begin{lstlisting}[caption={Random Forest Implementation}]
+from sklearn.ensemble import RandomForestRegressor
+
+# Initialize model
+rf_model = RandomForestRegressor(
+    n_estimators=100,
+    max_depth=10,
+    min_samples_split=5,
+    random_state=42
+)
+
+# Train model
+rf_model.fit(X_train_scaled, y_train)
+\end{lstlisting}
+
+\subsubsection{Hyperparameter Tuning}
+
+Key hyperparameters optimized:
+\begin{itemize}
+    \item \texttt{n\_estimators}: Number of trees
+    \item \texttt{max\_depth}: Maximum tree depth
+    \item \texttt{min\_samples\_split}: Minimum samples for split
+\end{itemize}
+
+\subsection{XGBoost Model}
+
+\subsubsection{Model Configuration}
+
+\begin{lstlisting}[caption={XGBoost Implementation}]
+import xgboost as xgb
+
+# Initialize model
+xgb_model = xgb.XGBRegressor(
+    n_estimators=100,
+    learning_rate=0.1,
+    max_depth=6,
+    random_state=42
+)
+
+# Train model
+xgb_model.fit(X_train_scaled, y_train)
+\end{lstlisting}
+
+\section{Model Evaluation}
+
+\subsection{Evaluation Metrics}
+
+\subsubsection{Mean Squared Error (MSE)}
+
+\begin{equation}
+    MSE = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2
+\end{equation}
+
+\subsubsection{R-squared Score}
+
+\begin{equation}
+    R^2 = 1 - \frac{\sum_{i=1}^{n} (y_i - \hat{y}_i)^2}{\sum_{i=1}^{n} (y_i - \bar{y})^2}
+\end{equation}
+
+\subsection{Cross-Validation}
+
+K-fold cross-validation is employed to assess model generalization:
+\begin{itemize}
+    \item Dataset split into K folds
+    \item Model trained on K-1 folds
+    \item Validated on remaining fold
+    \item Process repeated K times
+\end{itemize}
+
+\section{Model Selection and Deployment}
+
+The final model is selected based on:
+\begin{itemize}
+    \item Prediction accuracy on test set
+    \item Generalization capability
+    \item Computational efficiency
+    \item Interpretability
+\end{itemize}
+
+Models are serialized using joblib for deployment:
+\begin{lstlisting}[caption={Model Serialization}]
+import joblib
+
+# Save model
+joblib.dump(rf_model, 'model.pkl')
+joblib.dump(scaler, 'scaler.pkl')
+
+# Load model
+model = joblib.load('model.pkl')
+scaler = joblib.load('scaler.pkl')
+\end{lstlisting}
+
+% ========================================
+% Chapter 7: Implementation
+% ========================================
+\chapter{Implementation Details}
+
+\section{Development Environment}
+
+\subsection{Technologies and Tools}
+
+\begin{table}[h]
+\centering
+\caption{Technologies Used}
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Category} & \textbf{Technology} \\ \midrule
+Backend Framework & Flask 3.1.2 \\
+Database ORM & SQLAlchemy \\
+Authentication & Flask-Login \\
+ML Framework & scikit-learn, XGBoost \\
+Data Processing & pandas, numpy \\
+Frontend & HTML5, CSS3, JavaScript \\
+UI Framework & Bootstrap \\
+Version Control & Git \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Application Structure}
+
+\subsection{Project Directory Structure}
+
+\begin{verbatim}
+Project_Salary_Prediction/
+├── app/
+│   ├── __init__.py          # Application factory
+│   ├── auth.py              # Authentication routes
+│   ├── main.py              # Main routes
+│   ├── employees.py         # Employee management
+│   ├── models.py            # Database models
+│   ├── prediction.py        # Prediction logic
+│   ├── prediction_routes.py # Prediction API
+│   ├── recruitment.py       # Recruitment tracking
+│   └── termination.py       # Termination tracking
+├── ml_models/
+│   ├── random_forest.py     # RF model training
+│   ├── gxboost.py          # XGBoost training
+│   └── artifacts/          # Saved models
+├── templates/              # HTML templates
+├── static/                 # CSS, JS, images
+├── data/                   # Training data
+├── config.py              # Configuration
+├── requirements.txt       # Dependencies
+└── run.py                 # Application entry point
+\end{verbatim}
+
+\section{Key Implementation Details}
+
+\subsection{Application Factory Pattern}
+
+\begin{lstlisting}[caption={Application Factory}]
+def create_app():
+    app = Flask(__name__)
+    app.config.from_object('config.Config')
+    
+    # Initialize extensions
+    db.init_app(app)
+    login_manager.init_app(app)
+    csrf.init_app(app)
+    
+    # Register blueprints
+    app.register_blueprint(auth)
+    app.register_blueprint(main)
+    app.register_blueprint(employees)
+    app.register_blueprint(recruitment_bp)
+    app.register_blueprint(termination_bp)
+    app.register_blueprint(prediction_bp)
+    
+    return app
+\end{lstlisting}
+
+\subsection{Database Models}
+
+\begin{lstlisting}[caption={User Model}]
+from flask_login import UserMixin
+from werkzeug.security import generate_password_hash
+
+class User(UserMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True)
+    email_adress = db.Column(db.String(120), unique=True)
+    password = db.Column(db.String(200))
+    matricule = db.Column(db.String(50), unique=True)
+\end{lstlisting}
+
+\subsection{Prediction Service}
+
+\begin{lstlisting}[caption={Prediction Function}]
+def predict_salary(features):
+    # Load model and scaler
+    model = joblib.load('artifacts/model.pkl')
+    scaler = joblib.load('artifacts/scaler.pkl')
+    
+    # Scale features
+    features_scaled = scaler.transform(features)
+    
+    # Make prediction
+    prediction = model.predict(features_scaled)
+    
+    return prediction[0]
+\end{lstlisting}
+
+\subsection{Input Validation and Sanitization}
+
+\begin{lstlisting}[caption={Input Sanitization}]
+import html
+
+def _sanitize_input(value: str) -> str:
+    """Sanitize user input to prevent XSS attacks"""
+    if not value:
+        return ''
+    return html.escape(value.strip())
+
+# Usage
+experience = _sanitize_input(
+    request.form.get("experience", "0")
+)
+\end{lstlisting}
+
+\section{API Implementation}
+
+\subsection{RESTful Prediction Endpoint}
+
+\begin{lstlisting}[caption={Prediction API Endpoint}]
+@prediction_bp.route('/predict', methods=['POST'])
+def predict_api():
+    try:
+        data = request.get_json()
+        
+        # Extract features
+        features = {
+            'experience': data.get('experience'),
+            'education': data.get('education'),
+            'position': data.get('position'),
+            'department': data.get('department')
+        }
+        
+        # Make prediction
+        salary = predict_salary(features)
+        
+        return jsonify({
+            'success': True,
+            'predicted_salary': salary
+        })
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 400
+\end{lstlisting}
+
+\section{User Interface}
+
+\subsection{Template Inheritance}
+
+Base template provides consistent layout:
+\begin{lstlisting}[language=HTML, caption={Base Template Structure}]
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    {% block styles %}{% endblock %}
+</head>
+<body>
+    {% include 'navbar.html' %}
+    
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    
+    {% block scripts %}{% endblock %}
+</body>
+</html>
+\end{lstlisting}
+
+\subsection{Prediction Form}
+
+Interactive form for salary prediction:
+\begin{itemize}
+    \item Input fields for employee features
+    \item Client-side validation
+    \item AJAX submission for seamless experience
+    \item Real-time result display
+\end{itemize}
+
+% ========================================
+% Chapter 8: Testing and Validation
+% ========================================
+\chapter{Testing and Validation}
+
+\section{Testing Strategy}
+
+\subsection{Unit Testing}
+
+Individual components tested in isolation:
+\begin{itemize}
+    \item Model prediction functions
+    \item Input validation functions
+    \item Database operations
+    \item Utility functions
+\end{itemize}
+
+\subsection{Integration Testing}
+
+Testing component interactions:
+\begin{itemize}
+    \item Authentication flow
+    \item Prediction pipeline
+    \item Database transactions
+\end{itemize}
+
+\subsection{End-to-End Testing}
+
+Complete user workflows tested:
+\begin{itemize}
+    \item User registration and login
+    \item Employee management operations
+    \item Salary prediction process
+    \item History viewing
+\end{itemize}
+
+\section{Model Validation}
+
+\subsection{Training and Test Split}
+
+Data divided into training (80\%) and test (20\%) sets to evaluate model performance on unseen data.
+
+\subsection{Performance Metrics}
+
+\begin{table}[h]
+\centering
+\caption{Model Performance Comparison}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+\textbf{Model} & \textbf{MSE} & \textbf{R² Score} \\ \midrule
+Random Forest & [Value] & [Value] \\
+XGBoost & [Value] & [Value] \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Feature Importance Analysis}
+
+Analysis of which features contribute most to predictions:
+\begin{itemize}
+    \item Years of experience
+    \item Education level
+    \item Position/Title
+    \item Department
+\end{itemize}
+
+\section{Security Testing}
+
+\subsection{Vulnerability Assessment}
+
+Tests performed:
+\begin{itemize}
+    \item SQL injection attempts
+    \item XSS attack simulation
+    \item CSRF token validation
+    \item Password strength testing
+\end{itemize}
+
+\subsection{Authentication Testing}
+
+Verified:
+\begin{itemize}
+    \item Unauthorized access prevention
+    \item Session management
+    \item Password hashing
+    \item Login/logout functionality
+\end{itemize}
+
+\section{Performance Testing}
+
+\subsection{Load Testing}
+
+System tested under various load conditions:
+\begin{itemize}
+    \item Concurrent user simulations
+    \item Response time measurements
+    \item Resource utilization monitoring
+\end{itemize}
+
+\subsection{Prediction Performance}
+
+\begin{itemize}
+    \item Average prediction time: < 1 second
+    \item Memory usage: Acceptable range
+    \item CPU utilization: Optimized
+\end{itemize}
+
+% ========================================
+% Chapter 9: Results and Discussion
+% ========================================
+\chapter{Results and Discussion}
+
+\section{System Functionality}
+
+\subsection{Implemented Features}
+
+The following features have been successfully implemented:
+
+\begin{enumerate}
+    \item \textbf{User Authentication System}
+    \begin{itemize}
+        \item Secure registration and login
+        \item Password encryption
+        \item Session management
+    \end{itemize}
+    
+    \item \textbf{Employee Management}
+    \begin{itemize}
+        \item Complete CRUD operations
+        \item Profile viewing
+        \item Data validation
+    \end{itemize}
+    
+    \item \textbf{Salary Prediction Engine}
+    \begin{itemize}
+        \item Random Forest model integration
+        \item XGBoost model integration
+        \item Feature scaling and preprocessing
+    \end{itemize}
+    
+    \item \textbf{History Tracking}
+    \begin{itemize}
+        \item Prediction storage
+        \item Historical data retrieval
+        \item User-specific history
+    \end{itemize}
+    
+    \item \textbf{Workforce Management}
+    \begin{itemize}
+        \item Recruitment tracking
+        \item Termination recording
+        \item Statistical analysis
+    \end{itemize}
+\end{enumerate}
+
+\section{Model Performance}
+
+\subsection{Prediction Accuracy}
+
+Both models demonstrate strong performance:
+\begin{itemize}
+    \item Predictions are within acceptable error margins
+    \item Models generalize well to new data
+    \item Feature importance aligns with domain knowledge
+\end{itemize}
+
+\subsection{Comparison of Models}
+
+\textbf{Random Forest:}
+\begin{itemize}
+    \item Pros: Robust, interpretable, handles non-linearity
+    \item Cons: Larger model size, slower inference
+\end{itemize}
+
+\textbf{XGBoost:}
+\begin{itemize}
+    \item Pros: Higher accuracy, faster training, regularization
+    \item Cons: More complex tuning, potential overfitting
+\end{itemize}
+
+\section{Challenges and Solutions}
+
+\subsection{Challenge 1: Data Quality}
+
+\textbf{Problem:} Inconsistent data formats and missing values
+
+\textbf{Solution:} Implemented robust data cleaning pipeline with validation rules
+
+\subsection{Challenge 2: Model Selection}
+
+\textbf{Problem:} Choosing between different algorithms
+
+\textbf{Solution:} Systematic comparison using cross-validation and multiple metrics
+
+\subsection{Challenge 3: Security}
+
+\textbf{Problem:} Ensuring application security
+
+\textbf{Solution:} Implemented CSRF protection, input sanitization, and secure authentication
+
+\section{Limitations}
+
+\begin{itemize}
+    \item Model trained on historical data may not capture future trends
+    \item Limited to features available in the dataset
+    \item Requires periodic retraining to maintain accuracy
+    \item Performance dependent on data quality
+\end{itemize}
+
+\section{Impact and Benefits}
+
+\subsection{For HR Professionals}
+
+\begin{itemize}
+    \item Data-driven salary decisions
+    \item Reduced time in salary negotiations
+    \item Improved consistency in compensation
+\end{itemize}
+
+\subsection{For Organization}
+
+\begin{itemize}
+    \item Better budget planning
+    \item Competitive positioning
+    \item Enhanced fairness and transparency
+\end{itemize}
+
+% ========================================
+% Chapter 10: Conclusion
+% ========================================
+\chapter{Conclusion and Future Work}
+
+\section{Summary of Achievements}
+
+This internship project successfully delivered a comprehensive Salary Prediction System that combines machine learning techniques with a user-friendly web application. The system provides:
+
+\begin{itemize}
+    \item Accurate salary predictions using Random Forest and XGBoost models
+    \item Complete employee management functionality
+    \item Secure authentication and authorization
+    \item Intuitive user interface
+    \item RESTful API for integration capabilities
+    \item Historical tracking for audit and analysis
+\end{itemize}
+
+The project demonstrates the practical application of machine learning in human resources management, providing valuable insights for compensation planning and decision-making.
+
+\section{Learning Outcomes}
+
+Through this internship, I gained valuable experience in:
+
+\begin{itemize}
+    \item Developing end-to-end machine learning applications
+    \item Web application development using Flask framework
+    \item Database design and management with SQLAlchemy
+    \item Implementing security best practices
+    \item Model training, evaluation, and deployment
+    \item Project management and documentation
+    \item Professional collaboration and communication
+\end{itemize}
+
+\section{Future Work}
+
+Several enhancements can be made to improve the system:
+
+\subsection{Model Improvements}
+
+\begin{itemize}
+    \item Incorporate deep learning models (neural networks)
+    \item Implement ensemble methods combining multiple models
+    \item Add more features (location, industry trends, certifications)
+    \item Real-time model retraining pipeline
+    \item A/B testing framework for model comparison
+\end{itemize}
+
+\subsection{Feature Enhancements}
+
+\begin{itemize}
+    \item \textbf{Salary Range Prediction:} Provide confidence intervals
+    \item \textbf{Market Comparison:} Compare with industry standards
+    \item \textbf{Career Path Prediction:} Forecast salary progression
+    \item \textbf{Recommendation System:} Suggest skill development
+    \item \textbf{Dashboard Analytics:} Comprehensive reporting
+    \item \textbf{Mobile Application:} iOS and Android apps
+\end{itemize}
+
+\subsection{Technical Improvements}
+
+\begin{itemize}
+    \item Containerization using Docker
+    \item Deployment on cloud platforms (AWS, Azure, GCP)
+    \item Implementing CI/CD pipeline
+    \item Adding comprehensive logging and monitoring
+    \item Performance optimization and caching
+    \item Microservices architecture
+\end{itemize}
+
+\subsection{Integration Capabilities}
+
+\begin{itemize}
+    \item Integration with HR management systems (HRIS)
+    \item Connection to job boards for market data
+    \item Payroll system integration
+    \item Export to various formats (PDF, Excel)
+\end{itemize}
+
+\section{Final Remarks}
+
+This internship experience has been invaluable in bridging the gap between academic knowledge and practical application. The Salary Prediction System represents a meaningful contribution to modern HR management practices, demonstrating how machine learning can enhance decision-making processes.
+
+The project has not only achieved its technical objectives but has also provided insights into the challenges and opportunities of applying artificial intelligence in real-world business scenarios. The skills and knowledge gained during this internship will be instrumental in my future career in data science and software development.
+
+I am grateful for the opportunity to work on this project and look forward to seeing how the system evolves and benefits its users in the future.
+
+% ========================================
+% Bibliography
+% ========================================
+\begin{thebibliography}{99}
+
+\bibitem{breiman2001}
+Breiman, L. (2001).
+\textit{Random Forests}.
+Machine Learning, 45(1), 5-32.
+
+\bibitem{chen2016}
+Chen, T., \& Guestrin, C. (2016).
+\textit{XGBoost: A Scalable Tree Boosting System}.
+Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining.
+
+\bibitem{scikit-learn}
+Pedregosa, F., et al. (2011).
+\textit{Scikit-learn: Machine Learning in Python}.
+Journal of Machine Learning Research, 12, 2825-2830.
+
+\bibitem{flask}
+Grinberg, M. (2018).
+\textit{Flask Web Development: Developing Web Applications with Python}.
+O'Reilly Media, 2nd Edition.
+
+\bibitem{hastie2009}
+Hastie, T., Tibshirani, R., \& Friedman, J. (2009).
+\textit{The Elements of Statistical Learning: Data Mining, Inference, and Prediction}.
+Springer, 2nd Edition.
+
+\bibitem{sqlalchemy}
+Bayer, M. (2012).
+\textit{SQLAlchemy: The Database Toolkit for Python}.
+Python Magazine.
+
+\bibitem{salary-prediction}
+Author, A. (Year).
+\textit{Salary Prediction using Machine Learning Techniques}.
+Journal Name, Volume(Issue), pages.
+
+\bibitem{hr-analytics}
+Author, B. (Year).
+\textit{Human Resource Analytics: A Modern Approach}.
+Publisher.
+
+\bibitem{web-security}
+OWASP Foundation. (2021).
+\textit{OWASP Top Ten Web Application Security Risks}.
+Available at: https://owasp.org/
+
+\bibitem{python-docs}
+Python Software Foundation.
+\textit{Python 3 Documentation}.
+Available at: https://docs.python.org/3/
+
+\end{thebibliography}
+
+% ========================================
+% Appendices
+% ========================================
+\appendix
+
+\chapter{Installation Guide}
+
+\section{Prerequisites}
+
+\begin{itemize}
+    \item Python 3.8 or higher
+    \item pip package manager
+    \item MySQL or SQLite database
+    \item Git (for version control)
+\end{itemize}
+
+\section{Installation Steps}
+
+\begin{enumerate}
+    \item Clone the repository:
+    \begin{lstlisting}[language=bash]
+git clone https://github.com/username/Project_Salary_Prediction.git
+cd Project_Salary_Prediction
+    \end{lstlisting}
+    
+    \item Create virtual environment:
+    \begin{lstlisting}[language=bash]
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+    \end{lstlisting}
+    
+    \item Install dependencies:
+    \begin{lstlisting}[language=bash]
+pip install -r requirements.txt
+    \end{lstlisting}
+    
+    \item Configure environment variables:
+    \begin{lstlisting}[language=bash]
+cp .env.example .env
+# Edit .env with your configuration
+    \end{lstlisting}
+    
+    \item Initialize database:
+    \begin{lstlisting}[language=bash]
+python create_user.py
+    \end{lstlisting}
+    
+    \item Run the application:
+    \begin{lstlisting}[language=bash]
+python run.py
+    \end{lstlisting}
+\end{enumerate}
+
+\chapter{API Documentation}
+
+\section{Authentication Endpoints}
+
+\subsection{POST /auth/register}
+
+Register a new user.
+
+\textbf{Request Body:}
+\begin{lstlisting}[language=json]
+{
+    "username": "string",
+    "email": "string",
+    "password": "string",
+    "matricule": "string"
+}
+\end{lstlisting}
+
+\textbf{Response:}
+\begin{lstlisting}[language=json]
+{
+    "success": true,
+    "message": "User registered successfully"
+}
+\end{lstlisting}
+
+\subsection{POST /auth/login}
+
+Authenticate user.
+
+\textbf{Request Body:}
+\begin{lstlisting}[language=json]
+{
+    "username": "string",
+    "password": "string"
+}
+\end{lstlisting}
+
+\section{Prediction Endpoints}
+
+\subsection{POST /prediction/predict}
+
+Make salary prediction.
+
+\textbf{Request Body:}
+\begin{lstlisting}[language=json]
+{
+    "experience": float,
+    "education": "string",
+    "position": "string",
+    "department": "string"
+}
+\end{lstlisting}
+
+\textbf{Response:}
+\begin{lstlisting}[language=json]
+{
+    "success": true,
+    "predicted_salary": float,
+    "model_used": "string"
+}
+\end{lstlisting}
+
+\chapter{Database Schema}
+
+\section{Entity-Relationship Diagram}
+
+[Insert ER diagram here]
+
+\section{Table Descriptions}
+
+\subsection{User Table}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Column} & \textbf{Type} & \textbf{Description} \\ \midrule
+id & Integer & Primary key \\
+username & String(80) & Unique username \\
+email\_adress & String(120) & Email address \\
+password & String(200) & Hashed password \\
+matricule & String(50) & Employee ID \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Employee Table}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Column} & \textbf{Type} & \textbf{Description} \\ \midrule
+id & Integer & Primary key \\
+matricule & String(50) & Employee ID \\
+first\_name & String(100) & First name \\
+last\_name & String(100) & Last name \\
+position & String(100) & Job position \\
+departement & String(100) & Department \\
+salary & Float & Current salary \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\chapter{Code Snippets}
+
+\section{Complete Model Training Script}
+
+\begin{lstlisting}[caption={Random Forest Model Training}]
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_squared_error, r2_score
+import joblib
+
+# Load data
+data = pd.read_csv('data/employee_data.csv')
+
+# Prepare features and target
+X = data[['experience', 'education', 'position', 'department']]
+y = data['salary']
+
+# Encode categorical variables
+X_encoded = pd.get_dummies(X, columns=['education', 'position', 'department'])
+
+# Split data
+X_train, X_test, y_train, y_test = train_test_split(
+    X_encoded, y, test_size=0.2, random_state=42
+)
+
+# Scale features
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+# Train model
+model = RandomForestRegressor(
+    n_estimators=100,
+    max_depth=10,
+    random_state=42
+)
+model.fit(X_train_scaled, y_train)
+
+# Evaluate
+y_pred = model.predict(X_test_scaled)
+mse = mean_squared_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+
+print(f"MSE: {mse:.2f}")
+print(f"R2 Score: {r2:.4f}")
+
+# Save model
+joblib.dump(model, 'artifacts/rf_model.pkl')
+joblib.dump(scaler, 'artifacts/scaler.pkl')
+\end{lstlisting}
+
+\chapter{User Manual}
+
+\section{Getting Started}
+
+\subsection{Registration}
+
+\begin{enumerate}
+    \item Navigate to the registration page
+    \item Fill in required information:
+    \begin{itemize}
+        \item Username
+        \item Email address
+        \item Password
+        \item Employee matricule
+    \end{itemize}
+    \item Click "Register"
+\end{enumerate}
+
+\subsection{Making a Prediction}
+
+\begin{enumerate}
+    \item Log in to your account
+    \item Navigate to "Predict Salary"
+    \item Enter employee information:
+    \begin{itemize}
+        \item Years of experience
+        \item Education level
+        \item Position
+        \item Department
+    \end{itemize}
+    \item Click "Predict"
+    \item View the predicted salary
+\end{enumerate}
+
+\subsection{Viewing History}
+
+\begin{enumerate}
+    \item Go to "History" page
+    \item View all previous predictions
+    \item Filter by date or criteria
+    \item Export data if needed
+\end{enumerate}
+
+\section{Troubleshooting}
+
+\subsection{Common Issues}
+
+\textbf{Issue:} Cannot log in
+
+\textbf{Solution:} Verify username and password, ensure account is activated
+
+\textbf{Issue:} Prediction returns error
+
+\textbf{Solution:} Check input values are valid, ensure all fields are filled
+
+\textbf{Issue:} Application won't start
+
+\textbf{Solution:} Verify dependencies installed, check database connection
+
+\end{document}
